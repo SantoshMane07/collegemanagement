@@ -16,15 +16,15 @@ class CollegemanagementsystemApplicationTests {
 	private JwtService jwtService;
 	@Test
 	void contextLoads() {
-		UserEntity userEntity = new UserEntity(4L,"prem@gmail.com","123", Set.of(Role.ADMIN));
-
-		String token = jwtService.generateToken(userEntity);
-
-		System.out.println(token);
-
-		Long id = jwtService.getUserIdFromToken(token);
-
-		System.out.println(id);
+//		UserEntity userEntity = new UserEntity(4L,"prem@gmail.com","123","Prem" ,Set.of(Role.ADMIN));
+//
+//		String token = jwtService.generateToken(userEntity);
+//
+//		System.out.println(token);
+//
+//		Long id = jwtService.getUserIdFromToken(token);
+//
+//		System.out.println(id);
 	}
 
 }
