@@ -1,4 +1,4 @@
-package com.santoshmane.week3.collegemanagement.services.auth;
+package com.santoshmane.week3.collegemanagement.services.security;
 
 import com.santoshmane.week3.collegemanagement.exceptions.ResourceNotFoundException;
 import com.santoshmane.week3.collegemanagement.repositories.UserRepository;
@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-//@Service
+@Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
