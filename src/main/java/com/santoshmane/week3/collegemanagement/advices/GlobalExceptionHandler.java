@@ -1,8 +1,10 @@
 package com.santoshmane.week3.collegemanagement.advices;
 
 import com.santoshmane.week3.collegemanagement.exceptions.ResourceNotFoundException;
+import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -47,6 +49,26 @@ public class GlobalExceptionHandler {
                 .message(exception.getMessage())
                 .build();
         System.out.println(exception);
+        return buildErrorResponseEntity(apiError);
+    }
+
+    //Exceptions Related to Security - Authentication
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ApiResponse<?>> handleAuthenticationException(AuthenticationException ex) {
+        ApiError apiError = ApiError.builder()
+                .status(HttpStatus.UNAUTHORIZED)
+                .message(ex.getLocalizedMessage())
+                .build();
+        return buildErrorResponseEntity(apiError);
+    }
+
+    //Exceptions Related to Security - JWT Exception
+    @ExceptionHandler(JwtException.class)
+    public ResponseEntity<ApiResponse<?>> handleJwtException(JwtException ex) {
+        ApiError apiError = ApiError.builder()
+                .status(HttpStatus.UNAUTHORIZED)
+                .message(ex.getLocalizedMessage())
+                .build();
         return buildErrorResponseEntity(apiError);
     }
 

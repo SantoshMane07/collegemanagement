@@ -1,6 +1,9 @@
 package com.santoshmane.week3.collegemanagement.configs;
 
 import com.santoshmane.week3.collegemanagement.entities.Role;
+import com.santoshmane.week3.collegemanagement.services.security.JwtAuthFilter;
+import com.santoshmane.week3.collegemanagement.services.security.LoggingFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,10 +19,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class WebSecurityConfig {
+
+    private final JwtAuthFilter jwtAuthFilter;
+
+    private final LoggingFilter loggingFilter;
+
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
@@ -32,16 +42,17 @@ public class WebSecurityConfig {
 //        return httpSecurity.build();
 
 
-        // Authenticating End points for particular roles
+        // Authenticating End points for particular users
                 httpSecurity
                 .authorizeHttpRequests(auth->auth
-                        .requestMatchers("/subjects","/professors","/auth/**").permitAll()
-                        .requestMatchers("admissionRecords/**").hasAnyRole(Role.ADMIN.toString())
+                        .requestMatchers("/auth/**").permitAll()
                         .anyRequest().authenticated())
                         .sessionManagement(sessionConfig -> sessionConfig
                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                         )
-                        .csrf(csrfConfig->csrfConfig.disable());
+                        .csrf(csrfConfig->csrfConfig.disable())
+                        .addFilterBefore(loggingFilter, UsernamePasswordAuthenticationFilter.class)
+                        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 //                .formLogin(Customizer.withDefaults()); commenting this as we will be using jwt
         return httpSecurity.build();
 
@@ -76,9 +87,5 @@ public class WebSecurityConfig {
 //        return new InMemoryUserDetailsManager(studentUser,adminUser,professorUser);
 //    }
 
-    //Required while creating in memory users
-    @Bean
-    PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
+
 }
