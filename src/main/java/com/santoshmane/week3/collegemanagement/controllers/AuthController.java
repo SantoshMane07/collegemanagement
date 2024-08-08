@@ -3,7 +3,7 @@ package com.santoshmane.week3.collegemanagement.controllers;
 
 import com.santoshmane.week3.collegemanagement.dtos.LoginDto;
 import com.santoshmane.week3.collegemanagement.dtos.SignUpDto;
-import com.santoshmane.week3.collegemanagement.dtos.TokenDto;
+import com.santoshmane.week3.collegemanagement.dtos.LoginResponseDto;
 import com.santoshmane.week3.collegemanagement.dtos.UserDto;
 import com.santoshmane.week3.collegemanagement.services.security.AuthService;
 import com.santoshmane.week3.collegemanagement.services.security.UserService;
@@ -40,6 +40,6 @@ public class AuthController {
         cookie.setHttpOnly(true);
         httpServletResponse.addCookie(cookie);
 
-        return ResponseEntity.ok(new TokenDto(token));
+        return ResponseEntity.ok(new LoginResponseDto(token));
     }
 }

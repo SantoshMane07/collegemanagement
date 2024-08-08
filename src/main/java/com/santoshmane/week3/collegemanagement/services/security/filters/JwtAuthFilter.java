@@ -1,6 +1,8 @@
-package com.santoshmane.week3.collegemanagement.services.security;
+package com.santoshmane.week3.collegemanagement.services.security.filters;
 
 import com.santoshmane.week3.collegemanagement.entities.UserEntity;
+import com.santoshmane.week3.collegemanagement.services.security.JwtService;
+import com.santoshmane.week3.collegemanagement.services.security.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -43,7 +45,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             String token = requestTokenHeader.split("Bearer ")[1];
             Long userId = jwtService.getUserIdFromToken(token);
 
-            if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null && jwtService.validateToken(token)) {
                 UserEntity userEntity = userService.getUserById(userId);
                 UsernamePasswordAuthenticationToken authenticationToken =
                         new UsernamePasswordAuthenticationToken(userEntity, null, userEntity.getAuthorities());

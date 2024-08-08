@@ -1,4 +1,4 @@
-package com.santoshmane.week3.collegemanagement.services.security;
+package com.santoshmane.week3.collegemanagement.services.security.filters;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

@@ -1,23 +1,15 @@
 package com.santoshmane.week3.collegemanagement.configs;
 
-import com.santoshmane.week3.collegemanagement.entities.Role;
-import com.santoshmane.week3.collegemanagement.services.security.JwtAuthFilter;
-import com.santoshmane.week3.collegemanagement.services.security.LoggingFilter;
+import com.santoshmane.week3.collegemanagement.services.security.filters.JwtAuthFilter;
+import com.santoshmane.week3.collegemanagement.services.security.filters.LoggingFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
